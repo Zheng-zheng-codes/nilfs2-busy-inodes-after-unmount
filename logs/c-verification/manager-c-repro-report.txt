@@ -1,0 +1,57 @@
+VFS: Busy inodes after unmount of loop0 (nilfs2)
+------------[ cut here ]------------
+kernel BUG at fs/super.c:731!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+CPU: 1 UID: 0 PID: 10305 Comm: syz-executor Not tainted 7.4.0-rc2-kernsight-kasan #1 PREEMPT(full) 
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:generic_shutdown_super+0x305/0x3a0 fs/super.c:731
+Code: 50 48 89 ea 48 c1 ea 03 80 3c 02 00 0f 85 9a 00 00 00 48 8b 55 00 48 8d b3 c0 06 00 00 48 c7 c7 60 f2 30 8c e8 0c d5 35 ff 90 <0f> 0b e8 b4 f1 e3 ff e9 25 fd ff ff 4c 89 ef e8 a7 f1 e3 ff e9 ca
+RSP: 0018:ffa0000008a6fd60 EFLAGS: 00010282
+RAX: 0000000000000030 RBX: ff1100010f38c000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff81a46745 RDI: 0000000000000005
+RBP: ffffffff90abb3c0 R08: ffffffff81a3ed56 R09: 0000000000000000
+R10: ffffffff92b209e7 R11: 0000000000000000 R12: ff1100010f38c7d0
+R13: 0000000000000000 R14: 0000000000000001 R15: ff11000121cb63c0
+FS:  00005555577b1500(0000) GS:ff1100010b31e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fff5fea9f18 CR3: 000000010378c000 CR4: 0000000000753ef0
+PKRU: 00000000
+Call Trace:
+ <TASK>
+ kill_block_super+0x49/0x130 fs/super.c:1852
+ deactivate_locked_super+0xc0/0x130 fs/super.c:558
+ deactivate_super fs/super.c:586 [inline]
+ deactivate_super+0xb9/0xd0 fs/super.c:582
+ cleanup_mnt+0xbc/0x160 fs/namespace.c:1396
+ task_work_run+0x170/0x260 kernel/task_work.c:233
+ resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
+ __exit_to_user_mode_loop kernel/entry/common.c:70 [inline]
+ exit_to_user_mode_loop+0x254/0x650 kernel/entry/common.c:101
+ __exit_to_user_mode_prepare include/linux/irq-entry-common.h:207 [inline]
+ syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:230 [inline]
+ syscall_exit_to_user_mode include/linux/entry-common.h:343 [inline]
+ do_syscall_64+0x628/0x7c0 arch/x86/entry/syscall_64.c:107
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fa0807b44db
+Code: a8 ff ff ff f7 d8 64 89 01 48 83 c8 ff c3 90 f3 0f 1e fa 31 f6 e9 05 00 00 00 0f 1f 44 00 00 f3 0f 1e fa b8 a6 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 05 c3 0f 1f 40 00 48 c7 c2 a8 ff ff ff f7 d8
+RSP: 002b:00007fff5feaa6f8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
+RAX: 0000000000000000 RBX: 0000000000000003 RCX: 00007fa0807b44db
+RDX: 00007fa0806526a0 RSI: 0000000000000009 RDI: 00007fff5feaa7b0
+RBP: 00007fff5feaa7b0 R08: 0000000000000000 R09: 00007fff5feaa580
+R10: 00005555577c4673 R11: 0000000000000246 R12: 00007fa08084fe26
+R13: 00007fff5feab880 R14: 00005555577c4600 R15: 0000000000039c49
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:generic_shutdown_super+0x305/0x3a0 fs/super.c:731
+Code: 50 48 89 ea 48 c1 ea 03 80 3c 02 00 0f 85 9a 00 00 00 48 8b 55 00 48 8d b3 c0 06 00 00 48 c7 c7 60 f2 30 8c e8 0c d5 35 ff 90 <0f> 0b e8 b4 f1 e3 ff e9 25 fd ff ff 4c 89 ef e8 a7 f1 e3 ff e9 ca
+RSP: 0018:ffa0000008a6fd60 EFLAGS: 00010282
+RAX: 0000000000000030 RBX: ff1100010f38c000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff81a46745 RDI: 0000000000000005
+RBP: ffffffff90abb3c0 R08: ffffffff81a3ed56 R09: 0000000000000000
+R10: ffffffff92b209e7 R11: 0000000000000000 R12: ff1100010f38c7d0
+R13: 0000000000000000 R14: 0000000000000001 R15: ff11000121cb63c0
+FS:  00005555577b1500(0000) GS:ff1100010b31e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fff5fea9f18 CR3: 000000010378c000 CR4: 0000000000753ef0
+PKRU: 00000000
